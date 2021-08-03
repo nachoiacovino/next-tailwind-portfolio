@@ -60,11 +60,11 @@ Some new possibilities include loading components directly in the mdx file using
 For example, the following jsx snippet can be used directly in an MDX file to render the page title component:
 
 ```js
-import PageTitle from './PageTitle.js'
-;<PageTitle> Using JSX components in MDX </PageTitle>
+import PageTitle from './PageTitle.js';
+<PageTitle> Using JSX components in MDX </PageTitle>;
 ```
 
-import PageTitle from './PageTitle.js'
+import PageTitle from './PageTitle.js';
 
 <PageTitle> Using JSX components in MDX </PageTitle>
 
@@ -92,7 +92,7 @@ Here's an example layout which you can further customise:
 
 ```js
 export default function ExampleLayout({ frontMatter, children }) {
-  const { date, title } = frontMatter
+  const { date, title } = frontMatter;
 
   return (
     <SectionContainer>
@@ -100,7 +100,7 @@ export default function ExampleLayout({ frontMatter, children }) {
       <h1>{title}</h1>
       <div>{children}</div>
     </SectionContainer>
-  )
+  );
 }
 ```
 
@@ -132,16 +132,16 @@ export const MDXComponents = {
   a: CustomLink,
   pre: Pre,
   wrapper: ({ components, layout, ...rest }) => {
-    const Layout = require(`../layouts/${layout}`).default
-    return <Layout {...rest} />
+    const Layout = require(`../layouts/${layout}`).default;
+    return <Layout {...rest} />;
   },
-}
+};
 
 export const MDXLayoutRenderer = ({ layout, mdxSource, ...rest }) => {
-  const MDXLayout = useMemo(() => getMDXComponent(mdxSource), [mdxSource])
+  const MDXLayout = useMemo(() => getMDXComponent(mdxSource), [mdxSource]);
 
-  return <MDXLayout layout={layout} components={MDXComponents} {...rest} />
-}
+  return <MDXLayout layout={layout} components={MDXComponents} {...rest} />;
+};
 ```
 
 Use the `MDXLayoutRenderer` component in a page where you want to accept a layout name to map to the desired layout.
@@ -255,7 +255,6 @@ title: 'My first post'
 date: '2021-01-12'
 draft: false
 summary: 'My first post'
-authors: ['default', 'sparrowhawk']
 ```
 
 A demo of a multiple author post is shown in the [Introducing Tailwind Nextjs Starter Blog post](/blog/introducing-tailwind-nextjs-starter-blog).
@@ -284,11 +283,11 @@ alert('Sum = ' + sum) // "+" means combine into a string
 will appear as:
 
 ```js {1,3-4} showLineNumbers
-var num1, num2, sum
-num1 = prompt('Enter first number')
-num2 = prompt('Enter second number')
-sum = parseInt(num1) + parseInt(num2) // "+" means "add"
-alert('Sum = ' + sum) // "+" means combine into a string
+var num1, num2, sum;
+num1 = prompt('Enter first number');
+num2 = prompt('Enter second number');
+sum = parseInt(num1) + parseInt(num2); // "+" means "add"
+alert('Sum = ' + sum); // "+" means combine into a string
 ```
 
 To modify the styles, change the following class selectors in the `tailwind.css` file:
