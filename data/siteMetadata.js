@@ -1,20 +1,19 @@
 const siteMetadata = {
-  title: 'Next.js Starter Blog',
-  author: 'Tails Azimuth',
-  headerTitle: 'TailwindBlog',
-  description: 'A blog created with Next.js and Tailwind.css',
+  title: 'Nacho Iacovino',
+  author: 'Nacho Iacovino',
+  headerTitle: 'Nacho Iacovino',
+  description:
+    'Developer Relations and Frontend Developer based in Barcelona. Check my blog and my public appearences.',
   language: 'en-us',
-  siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
-  siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
+  siteUrl: 'https://nachoiacovino.com',
+  siteRepo: 'https://github.com/nachoiacovino/next-tailwind-portfolio',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
   socialBanner: '/static/images/twitter-card.png',
-  email: 'address@yoursite.com',
-  github: 'https://github.com',
-  twitter: 'https://twitter.com/Twitter',
-  facebook: 'https://facebook.com',
-  youtube: 'https://youtube.com',
-  linkedin: 'https://www.linkedin.com',
+  email: 'nacho.iacovino@gmail.com',
+  github: 'https://github.com/nachoiacovino',
+  twitter: 'https://twitter.com/nachoiacovino',
+  linkedin: 'https://www.linkedin.com/in/nachoiacovino',
   locale: 'en-US',
   analytics: {
     // supports plausible, simpleAnalytics or googleAnalytics
@@ -64,6 +63,6 @@ const siteMetadata = {
       shortname: process.env.NEXT_PUBLIC_DISQUS_SHORTNAME,
     },
   },
-}
+};
 
-module.exports = siteMetadata
+module.exports = siteMetadata;
