@@ -1,16 +1,16 @@
-import Script from 'next/script'
+import Script from 'next/script';
 
-import siteMetadata from '@/data/siteMetadata'
+import siteMetadata from '@/data/siteMetadata';
 
 const GAScript = () => {
   return (
     <>
       <Script
-        strategy="lazyOnload"
+        strategy='lazyOnload'
         src={`https://www.googletagmanager.com/gtag/js?id=${siteMetadata.analytics.googleAnalyticsId}`}
       />
 
-      <Script strategy="lazyOnload">
+      <Script strategy='lazyOnload'>
         {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -21,10 +21,10 @@ const GAScript = () => {
         `}
       </Script>
     </>
-  )
-}
+  );
+};
 
-export default GAScript
+export default GAScript;
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
 export const logEvent = (action, category, label, value) => {
@@ -32,5 +32,5 @@ export const logEvent = (action, category, label, value) => {
     event_category: category,
     event_label: label,
     value: value,
-  })
-}
+  });
+};
