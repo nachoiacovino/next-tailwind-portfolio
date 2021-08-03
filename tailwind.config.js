@@ -1,9 +1,14 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
-const colors = require('tailwindcss/colors')
+const defaultTheme = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors');
 
 module.exports = {
   mode: 'jit',
-  purge: ['./pages/**/*.js', './components/**/*.js', './layouts/**/*.js', './lib/**/*.js'],
+  purge: [
+    './pages/**/*.js',
+    './components/**/*.js',
+    './layouts/**/*.js',
+    './lib/**/*.js',
+  ],
   darkMode: 'class',
   theme: {
     extend: {
@@ -20,7 +25,7 @@ module.exports = {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        primary: colors.teal,
+        primary: colors.cyan,
         gray: colors.trueGray,
         code: {
           green: '#b5f4a5',
@@ -149,4 +154,4 @@ module.exports = {
     typography: ['dark'],
   },
   plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
-}
+};
