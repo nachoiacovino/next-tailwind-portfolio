@@ -1,6 +1,6 @@
+import siteMetadata from '@/data/siteMetadata';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import siteMetadata from '@/data/siteMetadata';
 
 export const PageSeo = ({ title, description }) => {
   const router = useRouter();
@@ -29,6 +29,9 @@ export const PageSeo = ({ title, description }) => {
         name='twitter:image'
         content={`${siteMetadata.siteUrl}${siteMetadata.socialBanner}`}
       />
+
+      {/* Analytics */}
+      <script async data-api='/_hive' src='/bee.js'></script>
     </Head>
   );
 };
