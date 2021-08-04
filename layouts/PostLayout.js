@@ -27,7 +27,7 @@ export default function PostLayout({
   prev,
   children,
 }) {
-  const { slug, fileName, date, title, tags } = frontMatter;
+  const { slug, fileName, date, title, tags, image } = frontMatter;
 
   return (
     <SectionContainer>
@@ -106,6 +106,13 @@ export default function PostLayout({
               </dd>
             </dl>
             <div className='divide-y divide-gray-200 dark:divide-gray-700 xl:pb-0 xl:col-span-3 xl:row-span-2'>
+              {console.log(image)}
+
+              {image && (
+                <div className='py-4'>
+                  <Image alt='ocean' src={image} width={1200} height={600} />
+                </div>
+              )}
               <div className='pt-10 pb-8 prose dark:prose-dark max-w-none'>
                 {children}
               </div>

@@ -90,6 +90,11 @@ inquirer
       type: 'input',
     },
     {
+      name: 'image',
+      message: 'Add image thumbnail',
+      type: 'input',
+    },
+    {
       name: 'layout',
       message: 'Select layout',
       type: 'list',
