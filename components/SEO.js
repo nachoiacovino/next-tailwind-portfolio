@@ -54,6 +54,7 @@ export const BlogSeo = ({
       : typeof images === 'string'
       ? [images]
       : images;
+  console.log(imagesArr);
 
   const featuredImages = imagesArr.map((img) => {
     return {
