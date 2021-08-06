@@ -9,7 +9,7 @@ const siteMetadata = {
   siteRepo: 'https://github.com/nachoiacovino/next-tailwind-portfolio',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
-  socialBanner: '/static/images/twitter-card.png',
+  socialBanner: '/static/images/twitter.png',
   email: 'nacho.iacovino@gmail.com',
   github: 'https://github.com/nachoiacovino',
   twitter: 'https://twitter.com/nachoiacovino',
