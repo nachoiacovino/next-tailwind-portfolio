@@ -14,6 +14,7 @@ const siteMetadata = {
   github: 'https://github.com/nachoiacovino',
   twitter: 'https://twitter.com/nachoiacovino',
   linkedin: 'https://www.linkedin.com/in/nachoiacovino',
+  hashnode: 'https://nacho.hashnode.dev/',
   locale: 'en-US',
   analytics: {
     // supports plausible, simpleAnalytics or googleAnalytics
