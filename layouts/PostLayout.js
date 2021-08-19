@@ -108,7 +108,7 @@ export default function PostLayout({
             <div className='divide-y divide-gray-200 dark:divide-gray-700 xl:pb-0 xl:col-span-3 xl:row-span-2'>
               {image && (
                 <div className='py-4'>
-                  <Image alt='ocean' src={image} width={1200} height={600} />
+                  <Image alt='' src={image} width={1200} height={600} />
                 </div>
               )}
               <div className='pt-10 pb-8 prose dark:prose-dark max-w-none'>
