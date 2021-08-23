@@ -29,9 +29,6 @@ export const PageSeo = ({ title, description }) => {
         name='twitter:image'
         content={`${siteMetadata.siteUrl}${siteMetadata.socialBanner}`}
       />
-
-      {/* Analytics */}
-      <script async data-api='/_hive' src='/bee.js'></script>
     </Head>
   );
 };
