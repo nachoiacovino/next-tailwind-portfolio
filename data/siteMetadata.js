@@ -10,7 +10,7 @@ const siteMetadata = {
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
   socialBanner: '/static/images/twitter.png',
-  email: 'nacho.iacovino@gmail.com',
+  email: 'hello@nachoiacovino.com',
   github: 'https://github.com/nachoiacovino',
   twitter: 'https://twitter.com/nachoiacovino',
   linkedin: 'https://www.linkedin.com/in/nachoiacovino',
