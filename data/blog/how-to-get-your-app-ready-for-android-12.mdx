@@ -1,0 +1,176 @@
+---
+title: How to get your app ready for Android 12
+date: '2022-02-08'
+tags: ['android', 'android-12']
+draft: false
+summary: "Android 12 bring us a new version, here's some thing you need to take into consideration before upgrading."
+image: '/static/images/blog/how-to-get-your-app-ready-for-android-12/thumbnail.png'
+---
+
+**Android 12** introduces some of the biggest UI and system changes to **Google**'s popular operating system that we have ever seen. It brings a lot to the table that users have been asking for – but it also begs the question: what do all these changes mean for frontend developers and designers?
+
+How can you make sure that your app is updated and ready for **Android 12** as it begins rolling out to more and more devices over the coming months? In this article, we've summarized the most important things developers need to look out for as they're migrating their apps to Android 12.
+
+In this article, we've summarized the most important things developers need to look out for when migrating their apps to Android 12 **— from adapting to new UI elements, privacy & security updates, and [monitoring the performance](https://sentry.io/for/android/?utm_source=medium&utm_medium=content&utm_campaign=android-12) of your applications.**
+
+## Adapting to new UI Elements
+
+Googles' new Material You design language introduces some bold, colorful changes, with the specific intent of feeling more “expressive, dynamic, and personal” than ever. Check out the video below for more detailed information:
+
+[https://www.youtube.com/watch?v=UHQPdP8qgrk](https://www.youtube.com/watch?v=UHQPdP8qgrk)
+
+But while **Material You** will undoubtedly allow us to build more personalized, beautiful apps, it also switches up the overall look and feel of the operating system quite a bit, with its much bolder, bigger elements, and dynamic color schemes that are algorithmically generated from the user’s own wallpaper or preselected color. All these changes result in a pretty impressive design overhaul that is fun to look at and interact with but also makes the task of choosing and implementing the best color scheme and overall design for your app a bit more difficult.
+
+![Widget in live theme. Image: developer.android.com](/static/images/blog/how-to-get-your-app-ready-for-android-12/Untitled.png)
+
+Widget in live theme. Image: developer.android.com
+
+![Widget in dark theme. Image: developer.android.com](/static/images/blog/how-to-get-your-app-ready-for-android-12/Untitled%201.png)
+
+Widget in dark theme. Image: developer.android.com
+
+**What does this mean for you?** Designers and developers wanting to update or implement these and other visual changes should start by heading over to [material.io](https://m3.material.io/) where they will be introduced to everything new coming with Material You (or Material Design 3). Such as:
+
+- Everything there is to know about the new [color system](https://m3.material.io/styles/color/overview) (accessibility, dynamism, tonal values, and more)
+- An in-depth look at the role of [design tokens](https://m3.material.io/foundations/design-tokens/overview) and overall [typography](https://m3.material.io/styles/typography/overview)
+- How to correctly indicate the state of various elements through [state layers](https://m3.material.io/foundations/interaction-states)
+- How to make your apps look better on [large screens](https://m3.material.io/foundations/adaptive-design/large-screens/overview) and [foldable devices](https://m3.material.io/foundations/adaptive-design/foldables/overview)
+- How to design [widgets](https://m3.material.io/components/widgets) correctly for Android 12
+- Everything you need to know about components, such as cards, buttons, dialogs, navigation bars, and more
+
+Google has also put an easy-to-follow tutorial on **codelabs**, [available here](https://codelabs.developers.google.com/visualize-dynamic-color#0), where you will be introduced to the various new color concepts, theming, tokens, and more.
+
+Also, don’t forget to check out Android’s [Material Theme Builder](https://www.figma.com/community/plugin/1034969338659738588/Material-Theme-Builder) where you can build your own custom themes and export them directly to code. Google has now updated its theme builder to Material Design 3, making it even easier to migrate from M2 (MDC 1.4.0) over to M3 (MDC 1.5.0). If you were already using the theme builder, you can simply:
+
+- Drop in the Android XML or Compose theme code
+- Change Theme.MaterialComponents._ to Theme.Material3._ to migrate your themes
+- Change Widget.MaterialComponents._ to Widget.Material3._ to migrate your widgets.
+
+**For a more in-depth migration guide, please check out [this link](https://m3.material.io/libraries/mdc-android/getting-started).**
+
+## More consistent notifications
+
+Android 12 changes the appearance and behavior of all notifications, including custom ones, to avoid anti-patterns, reduce user confusion and improve the overall user experience. From now on, all notifications will follow the pattern below:
+
+![Image: developer.android.com](/static/images/blog/how-to-get-your-app-ready-for-android-12/Untitled%202.png)
+
+Image: developer.android.com
+
+While this ensures that notifications will look more consistent across the board, it also means that apps that are currently using custom notifications will receive a new, predefined template and will no longer have access to the full notification area – so make sure that your notifications’ content still works with this new format, and adapt them where needed. As per Google:
+
+> The change in Android 12 affects apps that define custom subclasses of [Notification.Style](https://developer.android.com/reference/android/app/Notification.Style), or which use [Notification.Builder](https://developer.android.com/reference/android/app/Notification.Builder)’s methods [setCustomContentView(RemoteViews)](<https://developer.android.com/reference/android/app/Notification.Builder#setCustomContentView(android.widget.RemoteViews)>), [setCustomBigContentView(RemoteViews)](<https://developer.android.com/reference/android/app/Notification.Builder#setCustomBigContentView(android.widget.RemoteViews)>), and [setCustomHeadsUpContentView(RemoteViews)](<https://developer.android.com/reference/android/app/Notification.Builder#setCustomHeadsUpContentView(android.widget.RemoteViews)>).
+
+To enable the new behavior simply set your targetSdkVersion to S, recompile and install your app on a device or emulator running Android 12.
+
+Note that in their collapsed state the size of the notifications has been reduced, with a content height of 48dp (vs 106dp previously) and less horizontal space, and that all notifications will now be expandable, requiring not just the use of setCustomContentView but also setBigCustomContentView to ensure consistency.
+
+![Untitled](/static/images/blog/how-to-get-your-app-ready-for-android-12/Untitled%203.png)
+
+**For more detailed information on behavior changes related to notifications and more, please refer to [Google’s developer docs here](https://developer.android.com/about/versions/12/behavior-changes-12).**
+
+Oh right, one last thing! You know how annoying it is when you tap on a notification and then ... _nothing happens for a while?_ That's often due to a "**notification trampoline**", where instead of immediately starting the activity on notification tap, some apps **_first_** launch a service or broadcast receiver that then starts the activity using `startActivity()`.
+
+Android 12 will **prohibit** notifications from starting activities indirectly in this way. So, if for any reason, your app tries to start an activity via such a notification trampoline, Android will stop the activity altogether, and put a system message in Logcat asking developers to change their app launcher for performance reasons. Again, great for users, but it may take some tweaking on the developer's end.
+
+**For more information on how to identify and fix notification trampolines, click [here](https://developer.android.com/about/versions/12/behavior-changes-12#notification-trampolines).**
+
+## Privacy & Security Updates
+
+Playing catch up with iOS, Android 12 aims to bring a whole slew of privacy improvements that users have been asking for. There's a couple of things to watch out for here.
+
+**Privacy settings.** The privacy settings now include a brand-new, hugely extended privacy dashboard that gives users a pretty detailed overview over which data apps are allowed to access as well as how often they have used the device's microphone, camera, location, body sensors, calendar, call logs, contacts, and more within the last 24 hours - so that users can restrict specific access on a case-by-case basis.
+
+In the settings, users can now also opt-out of interest-based advertising or ads personalization, which will essentially replace their advertising ID with a string of zeros.
+
+![Image: developer.android.com](/static/images/blog/how-to-get-your-app-ready-for-android-12/privacy-dashboard.svg)
+
+Image: developer.android.com
+
+**What this means for you.** When you update your app's target API level to Android 12, you will have to declare a new Google Play services permission in your manifest file so that your app is allowed to use the advertising ID:
+
+```jsx
+<uses-permission android:name='com.google.android.gms.permission.AD_ID' />
+```
+
+Note that some SDKs may already declare this permission - if your app already uses them as dependencies (such as the Google Mobile Ads SDK), the manifest will be merged with your own app's manifest by default. For more information, [check this link](https://support.google.com/googleplay/android-developer/answer/6048248?hl=en&ref_topic=2364761).
+
+On that note, Google states that it's currently testing a new system that would alert developers and advertisers of opt-outs so that they can delete unused advertising IDS, and give users a clearer idea of how and when their IDs are used.
+
+Also, make sure that your app clearly outlines what permissions it is requesting and how these permissions impact the user's overall experience. If you notice that your app is requesting more information than necessary or is trying to access data that isn't critical to its overall functioning (such as call logs or location data), consider overhauling these parts of your application.
+
+**Approximate location.** As part of the renewed privacy settings, users will be able to not just select when an app has access to their location (always, never, only while using the app), but also how precisely they can pinpoint it. A user may choose to give their precise location to something like Google maps, but use only their approximate location for things like weather or dating apps.
+
+![Image: developer.android.com](/static/images/blog/how-to-get-your-app-ready-for-android-12/approximate-location-full-prompt.svg)
+
+Image: developer.android.com
+
+**What this means for you.** If your app targets Android 12 and up, this means that you now have to request both the `ACCESS_FINE_LOCATION` (as before) **_and_** the `ACCESS_COARSE_LOCATION` permission. Also, this needs to be done in a single runtime request.
+
+**Microphone and camera indicators and toggles.** Besides being able to restrict microphone and camera access, users will now also see a green indicator whenever an app is using their microphone or camera in the top right corner of the screen.
+
+![Mic/Camera toggles. Image: developer.android.com](/static/images/blog/how-to-get-your-app-ready-for-android-12/mic-camera-toggles.svg)
+
+Mic/Camera toggles. Image: developer.android.com
+
+![Mic/Camera indicator. Image: developer.android.com](/static/images/blog/how-to-get-your-app-ready-for-android-12/mic-camera-indicators.svg)
+
+Mic/Camera indicator. Image: developer.android.com
+
+**What this means for you.** As stated before, make sure users know what you need this data for - and consider removing the permission request if there is no clear performance or business need otherwise.
+
+**SameSite cookies in WebView.** Just like its desktop counterpart, Google Chrome, Android's WebView is based on Chromium and will as of Android 12 include similar changes to how third-party cookies are handled, specifically with regards to same-site requests. This means that how you set (or don't set) your cookies' SameSite attribute will define whether they can be sent with any or exclusively same-site requests.
+
+![Untitled](/static/images/blog/how-to-get-your-app-ready-for-android-12/Untitled%204.png)
+
+**What this means for you.** As stated by Google
+
+> Cookies without a `SameSite` attribute are treated as `SameSite=Lax`.
+
+However, not adding `SameSite=Lax` could result in a console error message asking to specifically set the SameSite attribute.
+
+```jsx
+Set-Cookie: color=dark; SameSite=Lax
+```
+
+> Cookies with `SameSite=None` must also specify the `Secure` attribute, meaning they require a secure context and should be sent over HTTPS.
+
+This means that any cookie that is marked as SameSite=None but doesn't have the Secure attribute will be rejected by Google. So you need to specify it as below:
+
+```jsx
+Set-Cookie: color=dark; SameSite=None; Secure
+```
+
+> Links between HTTP and HTTPS versions of a site are now treated as cross-site requests, so cookies are not sent unless they are appropriately marked as `SameSite=None; Secure`
+
+**For more detailed information on SameSite cookies, [click here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite).**
+
+### Performance
+
+Android 12 introduces a series of optimizations that will improve your app's performance.
+
+One of the biggest changes is that apps can no longer start foreground services while running in the background. There are, however, a couple of exceptions to this rule. To see if any of these apply to your app, [check the exceptions list here](https://developer.android.com/guide/components/foreground-services#background-start-restriction-exemptions).
+
+Google recommends using **WorkManager** to schedule your app's background tasks. Should you need to complete any time-sensitive foreground actions, however, you could start your foreground services by using an exact alarm.
+
+Exact alarms are based on the `[AlarmManager](https://developer.android.com/reference/android/app/AlarmManager)` class, and "give you a way to perform time-based operations outside the lifetime of your application" - like updating the UI of a weather forecast application, for example. However, note that to conserve system resources, to set exact alarms apps now need access to the "Alarms & reminders" capability in the Special app access screen.
+
+This can be obtained by requesting the `SCHEDULE_EXACT_ALARM` permission in your app manifest. As always, make sure users can understand why your app may need this permission to ensure optimal functioning, and that exact alarms "should only be for user-facing features".
+
+```
+<manifest ...>
+<uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <application ...>
+        ...
+    </application>
+</manifest>
+```
+
+**To learn more about exact alarms permissions, use cases, and more, [click here](https://developer.android.com/training/scheduling/alarms).**
+
+**If you (and you should, in my humble opinion) want to be more proactive about monitoring your application's performance, consider an application monitoring tool like** [Sentry](https://sentry.io/welcome/).
+
+Sentry allows you to track everything in a centralized place and catch any bugs that the migration to Android 12 might cause, it’s amazing to know every time for example when every time your app crashes and how.
+
+## Final thoughts
+
+All in all, Android 12 looks pretty promising, with its impressive UI overhaul, increased performance, and a plethora of security and privacy updates. But for developers and designers alike, these updates come with a range of changes to be implemented both now and in the future. As more and more devices will receive the update in the coming months, we recommend reconfiguring your app's behaviors, security features, and color palettes sooner rather than later - so that you can focus on building even more impressive features going forward.
